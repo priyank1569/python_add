@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student List</title>
+    <style>
+       
+        table {
+            border-collapse: collapse;
+            width: 100%; /* Make the table responsive */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Make the table responsive */
+        @media (max-width: 600px) {
+            table {
+                font-size: 0.8em;
+            }
+
+            th, td {
+                padding: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+    <table>
+        <thead>
+            <tr>
+                <th>Student Id</th>
+                <th>Student Name</th>
+                <th>Student Age</th>
+                <th>Student Email</th>
+                <th>Student City</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stu in stu %}
+            <tr>
+                <td>{{ stu.id }}</td>
+                <td>{{ stu.name }}</td>
+                <td>{{ stu.age }}</td>
+                <td>{{ stu.email }}</td>
+                <td>{{ stu.city }}</td>
+             
+                <td>
+                    <form method="POST" action="{% url 'delete_student' stu.id %}">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: red; color: white;">Delete</button>
+                    </form>
+                    <form method="POST" action="{% url 'update_student' stu.id %}">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: rgb(238, 255, 0); color: rgb(0, 0, 0);">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
